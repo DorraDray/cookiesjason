@@ -26,8 +26,7 @@ let data = {
      Bank:0,
   };
 
-  console.log(data.cookies)
-// a function that increases counter by 1 and changes the value of the counter on the page
+ // a function that increases counter by 1 and changes the value of the counter on the page
 function addcookie(){
     data.cookies = data.cookies + data.CookiesPerSecond;
     counter.textContent=data.cookies+" Cookies";
@@ -45,6 +44,7 @@ setInterval(function () {
     data.cookies = data.cookies + data.CookiesPerSecond;
     
     counter.textContent=Number(data.cookies)+" Cookies";
+    const stringifiedData = JSON.stringify(data);
     localStorage.setItem("data", stringifiedData);
   }, 1000); // 1000 milliseconds == 1 second
 
@@ -52,15 +52,12 @@ setInterval(function () {
  function loadCookies() {
 
       // get the data value from localStorage
-        const localData = localStorage.getItem("data");
-      // update our data variable
-         data = JSON.parse(localData);
-
-   
-
-    
-
-    const cookies=Number(data.cookies) ||0;
+        
+        data = JSON.parse(localStorage.getItem("data")) ?? data;
+      // update our data variable 
+    console.log(data)
+       
+    const cookies=Number(data.cookies);
     
     counter.textContent=cookies +" Cookies";
     counterPS.textContent=Number(data.CookiesPerSecond) + 'Cookies/Sec';
@@ -80,6 +77,7 @@ function addGrandma(){
     counterPS.textContent=data.CookiesPerSecond;
     data.cookies=data.cookies-10;
     counter.textContent=data.cookies+" Cookies";
+    const stringifiedData = JSON.stringify(data);
     localStorage.setItem("data",stringifiedData );
     
     }else{
@@ -94,6 +92,7 @@ function addOven(){
     counterPS.textContent=data.CookiesPerSecond;
     data.cookies=data.cookies-100;
     counter.textContent=data.cookies+" Cookies";
+    const stringifiedData = JSON.stringify(data);
     localStorage.setItem("data",stringifiedData );
     }
     else{
@@ -108,6 +107,7 @@ function addFactory(){
     counterPS.textContent=data.CookiesPerSecond;
     data.cookies=data.cookies-1000;
     counter.textContent=data.cookies+" Cookies";
+    const stringifiedData = JSON.stringify(data);
     localStorage.setItem("data",stringifiedData );
     }
     else{
@@ -122,6 +122,7 @@ function addMine(){
     counterPS.textContent=data.CookiesPerSecond;
     data.cookies=data.cookies-10000;
     counter.textContent=data.cookies+" Cookies";
+    const stringifiedData = JSON.stringify(data);
     localStorage.setItem("data",stringifiedData );
     }
     else{
@@ -136,6 +137,7 @@ function addBank(){
     counterPS.textContent=data.CookiesPerSecond;
     data.cookies=data.cookies-100000;
     counter.textContent=data.cookies+" Cookies";
+    const stringifiedData = JSON.stringify(data);
     localStorage.setItem("data",stringifiedData );
     }
     else{
@@ -151,20 +153,18 @@ buyBank.addEventListener("click", addBank);
 //reset function to clear Local Store (localstroage.clear()) 
 function reset(){
     localStorage.clear();
-    cookies=0;
-    CookiesPerSecond=1;
-    Grandma=0;
-    Oven=0;
-    Factory=0;
-    Mine=0;
-    Bank=0;
-    counter.textContent=cookies+" Cookies";
-    counterPS.textContent=CookiesPerSecond + 'Cookies/Sec';
-    counterGrandma.textContent = Grandma;
-    counterOven.textContent = Oven;
-    counterFactory.textContent=Factory;
-    counterMine.textContent=Mine;
-    counterBank.textContent=Bank;
+
+    data = {
+        cookies:0,
+         CookiesPerSecond:1,
+         Grandma:0,
+         Oven:0,
+         Factory:0,
+         Mine:0,
+         Bank:0,
+      };
+    loadCookies();
+   
 }
 
 resetid.addEventListener("click", reset);
